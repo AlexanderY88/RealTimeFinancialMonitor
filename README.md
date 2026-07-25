@@ -114,21 +114,63 @@ A **high-performance full-stack web application** designed to track, simulate, a
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 📋 Prerequisites
 
-Ensure you have the following installed on your system:
+Before you begin, ensure you have the following installed on your system:
 
-- **[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)** (8.0 or later)
-- **[Node.js](https://nodejs.org/)** (v20.0 or later)
-- **[Git](https://git-scm.com/)**
-- **[Docker](https://www.docker.com/)** (optional, for containerized deployment)
+#### Required for Regular Setup:
 
-### 📦 Installation
+| Tool | Version | Download Link | Purpose |
+|------|---------|---------------|---------|
+| **.NET SDK** | 8.0+ | [Download](https://dotnet.microsoft.com/download/dotnet/8.0) | Backend API runtime |
+| **Node.js** | 20.0+ | [Download](https://nodejs.org/) | Frontend development server |
+| **npm** | 10.0+ | Included with Node.js | JavaScript package manager |
+| **Git** | Latest | [Download](https://git-scm.com/) | Version control |
+
+#### Optional for Docker Setup:
+
+| Tool | Version | Download Link | Purpose |
+|------|---------|---------------|---------|
+| **Docker Desktop** | Latest | [Download](https://www.docker.com/products/docker-desktop) | Container runtime (includes Docker Compose) |
+
+#### Verify Installation
+
+Run these commands to verify your installations:
+
+```bash
+# Check .NET SDK
+dotnet --version
+# Expected output: 8.0.x or higher
+
+# Check Node.js
+node --version
+# Expected output: v20.x.x or higher
+
+# Check npm
+npm --version
+# Expected output: 10.x.x or higher
+
+# Check Git
+git --version
+# Expected output: git version 2.x.x
+
+# Check Docker (if using containerized setup)
+docker --version
+docker-compose --version
+```
+
+---
+
+## 📦 Installation Guide
+
+### Option 1: Regular Setup (Recommended for Development)
+
+This method gives you full control and hot-reload capabilities for development.
 
 #### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/RealTimeFinancialMonitor.git
+git clone https://github.com/AlexanderY88/RealTimeFinancialMonitor.git
 cd RealTimeFinancialMonitor
 ```
 
@@ -138,58 +180,300 @@ cd RealTimeFinancialMonitor
 # Navigate to backend directory
 cd backend
 
-# Restore dependencies
+# Restore NuGet packages
 dotnet restore
 
-# Run the API (defaults to http://localhost:5143)
-dotnet run --project FinancialMonitor.Api
+# Build the project (optional, run command does this automatically)
+dotnet build
 
-# Alternative: Use watch mode for hot reload during development
-dotnet watch --project FinancialMonitor.Api
+# Run the API with hot reload (recommended for development)
+dotnet watch run --project FinancialMonitor.Api
+
+# Alternative: Run without hot reload
+# dotnet run --project FinancialMonitor.Api
 ```
 
-The backend API will start at `http://localhost:5143` with Swagger UI available at `http://localhost:5143/swagger`.
+**Expected Output:**
+```
+Building...
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5143
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+```
+
+**Verify Backend:**
+- API Root: http://localhost:5143
+- Swagger UI: http://localhost:5143/swagger
+- Health Check: http://localhost:5143/api/transactions (should return `[]`)
 
 #### 3️⃣ Frontend Setup (React + Vite)
 
+Open a **new terminal window** (keep backend running) and run:
+
 ```bash
-# Navigate to frontend directory (from root)
+# Navigate to frontend directory from project root
 cd frontend
 
-# Install dependencies
+# Install npm dependencies
 npm install
 
-# Start development server (defaults to http://localhost:5173)
+# Start Vite development server with hot reload
 npm run dev
 ```
 
-The frontend will start at `http://localhost:5173` with hot module replacement (HMR) enabled.
+**Expected Output:**
+```
+  VITE v5.x.x  ready in 500 ms
 
-#### 4️⃣ Open in Browser
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+```
 
-Navigate to `http://localhost:5173` to access the application.
+**Verify Frontend:**
+- Open browser: http://localhost:5173
+- You should see the Financial Monitor dashboard
+- Connection status badge should show "Connected" (green)
+
+#### 4️⃣ Test the Application
+
+1. **Verify Real-Time Connection:**
+   - Check the connection status badge (top-right) shows "🟢 Connected"
+   
+2. **Create Test Transactions:**
+   - Click "➕ New Transaction" button
+   - Fill in amount (e.g., 1500.50), select currency (USD), select status (Completed)
+   - Click "🚀 Submit Transaction"
+   - Transaction should appear in the table immediately
+
+3. **Test Bulk Generation:**
+   - Click "🎲 Seed Burst" button
+   - Select number of transactions (e.g., 20)
+   - Click "Generate"
+   - Watch transactions appear in real-time
+
+4. **Test Search:**
+   - Type an amount in the search bar (e.g., "1500")
+   - Table filters instantly
 
 ---
 
-## 🐳 Docker Deployment
+### Option 2: Docker Setup (Recommended for Production/Deployment)
 
-### Quick Start with Docker Compose
+This method containerizes both frontend and backend for consistent deployment across environments.
+
+#### 1️⃣ Clone the Repository
 
 ```bash
-# Build and start all services
+git clone https://github.com/AlexanderY88/RealTimeFinancialMonitor.git
+cd RealTimeFinancialMonitor
+```
+
+#### 2️⃣ Build and Run with Docker Compose
+
+```bash
+# Build images and start all services
 docker-compose up --build
 
-# Run in detached mode
+# Alternative: Run in detached mode (background)
+docker-compose up -d --build
+
+# View logs (if running in detached mode)
+docker-compose logs -f
+```
+
+**Build Process:**
+- Backend: Multi-stage .NET 8 build (~2-3 minutes first time)
+- Frontend: Vite production build with Nginx (~1-2 minutes first time)
+- Subsequent builds use cached layers and are much faster
+
+**Expected Output:**
+```
+[+] Running 3/3
+ ✔ Network realtimefinancialmonitor_financial-monitor-network  Created
+ ✔ Container financial-monitor-backend                          Started
+ ✔ Container financial-monitor-frontend                         Started
+```
+
+#### 3️⃣ Access the Application
+
+**Services:**
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Frontend** | http://localhost:3000 | Main application UI |
+| **Backend API** | http://localhost:5143 | REST API endpoints |
+| **Swagger UI** | http://localhost:5143/swagger | API documentation |
+| **SignalR Hub** | ws://localhost:5143/transactionHub | WebSocket connection |
+
+#### 4️⃣ Manage Docker Containers
+
+```bash
+# View running containers
+docker ps
+
+# View logs for specific service
+docker-compose logs backend
+docker-compose logs frontend
+
+# Stop all services (containers remain)
+docker-compose stop
+
+# Start stopped services
+docker-compose start
+
+# Stop and remove containers
+docker-compose down
+
+# Stop, remove containers, and delete volumes (⚠️ deletes database)
+docker-compose down -v
+
+# Rebuild specific service
+docker-compose up -d --build backend
+docker-compose up -d --build frontend
+```
+
+#### 5️⃣ Database Persistence
+
+The SQLite database persists in a Docker volume named `backend-data`. Your transactions survive container restarts.
+
+**To reset the database:**
+```bash
+docker-compose down -v  # Removes volume
+docker-compose up --build
+```
+
+**To backup database:**
+```bash
+# Copy database from container to host
+docker cp financial-monitor-backend:/app/data/transactions.db ./backup.db
+```
+
+---
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### ❌ Port Already in Use
+
+**Problem:** `Error: listen EADDRINUSE: address already in use :::5143` or `:::3000`
+
+**Solution:**
+```bash
+# Find process using port (Windows PowerShell)
+netstat -ano | findstr :5143
+taskkill /PID <PID> /F
+
+# Find process using port (Linux/Mac)
+lsof -ti:5143 | xargs kill -9
+
+# Alternative: Change ports in docker-compose.yml or appsettings.json
+```
+
+#### ❌ Docker Build Fails
+
+**Problem:** `ERROR [build x/y] ...`
+
+**Solution:**
+```bash
+# Clean Docker cache and rebuild
+docker-compose down
+docker system prune -a
+docker-compose up --build
+```
+
+#### ❌ Backend Connection Error
+
+**Problem:** Frontend shows "Disconnected" or "Connection failed"
+
+**Solutions:**
+1. Verify backend is running: http://localhost:5143/api/transactions
+2. Check CORS settings in `backend/FinancialMonitor.Api/Program.cs`
+3. Ensure frontend is using correct backend URL in `Monitor.tsx`
+4. Clear browser cache and reload
+
+#### ❌ npm Install Fails
+
+**Problem:** `ERESOLVE unable to resolve dependency tree`
+
+**Solution:**
+```bash
+# Clear npm cache
+npm cache clean --force
+
+# Delete node_modules and package-lock.json
+rm -rf node_modules package-lock.json
+
+# Reinstall
+npm install
+```
+
+#### ❌ Database Lock Error
+
+**Problem:** `SQLite Error 5: database is locked`
+
+**Solution:**
+```bash
+# Stop all backend instances
+# Delete database file
+rm backend/FinancialMonitor.Api/financialmonitor.db*
+
+# Restart backend
+dotnet watch run --project backend/FinancialMonitor.Api
+```
+
+#### ❌ SignalR Connection Fails
+
+**Problem:** WebSocket connection keeps reconnecting
+
+**Solutions:**
+1. Check browser console for errors (F12)
+2. Verify SignalR hub endpoint is correct
+3. Ensure backend CORS allows credentials
+4. Try disabling browser extensions (ad blockers can block WebSockets)
+
+---
+
+## 📝 Quick Reference Commands
+
+### Development (Regular Setup)
+
+```bash
+# Backend (Terminal 1)
+cd backend
+dotnet watch run --project FinancialMonitor.Api
+
+# Frontend (Terminal 2)
+cd frontend
+npm run dev
+```
+
+### Docker (Production Setup)
+
+```bash
+# Start everything
 docker-compose up -d
 
-# Stop all services
+# View logs
+docker-compose logs -f
+
+# Stop everything
 docker-compose down
 ```
 
-**Services:**
-- Backend API: `http://localhost:5143`
-- Frontend: `http://localhost:5173`
-- SignalR Hub: `ws://localhost:5143/transactionHub`
+### Testing
+
+```bash
+# Backend tests
+cd backend
+dotnet test
+
+# Frontend build test
+cd frontend
+npm run build
+npm run preview
+```
 
 ---
 
@@ -554,11 +838,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Your Name**
+**Alexander Yarovoy**
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Name](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
+- GitHub: [@AlexanderY88](https://github.com/AlexanderY88)
+- Repository: [RealTimeFinancialMonitor](https://github.com/AlexanderY88/RealTimeFinancialMonitor)
 
 ---
 
@@ -576,9 +859,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 If you encounter any issues or have questions:
 
-1. Check the [Issues](https://github.com/yourusername/RealTimeFinancialMonitor/issues) page
+1. Check the [Issues](https://github.com/AlexanderY88/RealTimeFinancialMonitor/issues) page
 2. Create a new issue with detailed information
-3. Join our [Discussions](https://github.com/yourusername/RealTimeFinancialMonitor/discussions)
+3. Star the repository if you find it helpful!
 
 ---
 
