@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Backend - .NET 8 Web API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: financial-monitor-backend
+    ports:
+      - "5143:5143"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5143
+      # Database connection (if using SQLite, volume mount recommended)
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/transactions.db
+    volumes:
+      # Persist SQLite database
+      - backend-data:/app/data
+    networks:
+      - financial-monitor-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5143/api/transactions"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend - React + Vite + Nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: financial-monitor-frontend
+    ports:
+      - "3000:80"
+    environment:
+      # Backend API URL (accessible from browser)
+      - VITE_API_URL=http://localhost:5143
+    depends_on:
+      - backend
+    networks:
+      - financial-monitor-network
+    restart: unless-stopped
+
+# Volumes for persistent data
+volumes:
+  backend-data:
+    driver: local
+
+# Custom network
+networks:
+  financial-monitor-network:
+    driver: bridge

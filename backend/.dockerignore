@@ -1,0 +1,39 @@
+# Git
+.git
+.gitignore
+
+# Build outputs
+bin/
+obj/
+out/
+dist/
+
+# IDE
+.vs/
+.vscode/
+*.suo
+*.user
+
+# NuGet packages
+*.nupkg
+*.snupkg
+
+# Test results
+TestResults/
+*.trx
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+*.md
