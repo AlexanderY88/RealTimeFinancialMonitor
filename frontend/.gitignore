@@ -1,0 +1,270 @@
+##########################################################################################
+# Dependencies
+##########################################################################################
+
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Yarn
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+yarn-error.log*
+yarn-debug.log*
+
+# pnpm
+pnpm-debug.log*
+
+##########################################################################################
+# Build Outputs
+##########################################################################################
+
+dist/
+dist-ssr/
+build/
+*.local
+
+# Vite build outputs
+.vite/
+
+##########################################################################################
+# Logs
+##########################################################################################
+
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+##########################################################################################
+# Environment Variables
+##########################################################################################
+
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+.env*.local
+
+##########################################################################################
+# IDE / Editor Settings
+##########################################################################################
+
+# VSCode
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.code-workspace
+
+# WebStorm / IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.swp
+*.swo
+*~
+.vimsession
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+##########################################################################################
+# Operating System Files
+##########################################################################################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+.nfs*
+
+##########################################################################################
+# Testing
+##########################################################################################
+
+# Coverage reports
+coverage/
+*.lcov
+.nyc_output/
+*.coverage
+*.coveragexml
+
+# Jest
+jest-results/
+.jest-cache/
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
+##########################################################################################
+# TypeScript
+##########################################################################################
+
+*.tsbuildinfo
+*.tsbuildinfo.*
+
+# TypeScript cache
+.tscache/
+
+##########################################################################################
+# Temporary Files
+##########################################################################################
+
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+##########################################################################################
+# Package Manager Locks (optional - uncomment to ignore)
+##########################################################################################
+
+# Uncomment these if you want to ignore lock files
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+##########################################################################################
+# Storybook
+##########################################################################################
+
+storybook-static/
+.storybook-out/
+
+##########################################################################################
+# Miscellaneous
+##########################################################################################
+
+# Debug logs
+debug.log*
+
+# Local History for Visual Studio Code
+.history/
+.vscode-test
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional cache directories
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.docusaurus/
+.serverless/
+.fusebox/
+
+# Vercel
+.vercel
+
+# Turbo
+.turbo
+
+# Sentry
+.sentryclirc
+
+# Vuepress
+.vuepress/dist
+
+# Docusaurus
+.docusaurus
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Temporary folders
+tmp/
+temp/
+
+# OS generated files
+.Spotlight-V100
+.Trashes
+
+# Webpack
+.webpack/
+
+# SvelteKit
+.svelte-kit
+
+# End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,macos,windows,linux
